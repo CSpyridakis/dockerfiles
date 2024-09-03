@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Disconnect from the VPN server... "
+vpnc_disconnect
+
+echo "Exit..."

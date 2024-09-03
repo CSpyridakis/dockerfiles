@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "Start VPNC service ..."
+
+vpnc default.conf
+
+ip a
+
+echo "Wait for Cntl + C ..."
+( trap exit SIGINT ; read -r -d '' _ </dev/tty ) ## wait for Ctrl-C
