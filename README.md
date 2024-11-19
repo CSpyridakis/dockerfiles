@@ -19,3 +19,22 @@ docker run -d \
 	-it \
 	corentinth/it-tools
 ```
+
+### Firefox
+
+1. With appdata
+```
+docker run -d \
+    --name=firefox \
+    -p 5800:5800 \
+    -v /docker/appdata/firefox:/config:rw \
+    jlesage/firefox
+```
+
+2. Without appdata
+```
+docker run -d \
+    --name=firefox \
+    -p 5800:5800 \
+    jlesage/firefox
+```
