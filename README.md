@@ -46,3 +46,12 @@ docker run -d \
 	-p 4000:3000 \
 	grafana/grafana
 ```
+
+
+### Nginx
+```
+docker run -d \
+	--name nginx-base \
+	-p 80:80 \
+	nginx:latest
+```
