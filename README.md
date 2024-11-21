@@ -38,3 +38,11 @@ docker run -d \
     -p 5800:5800 \
     jlesage/firefox
 ```
+
+### Grafana
+```
+docker run -d \
+	--name=grafana \
+	-p 4000:3000 \
+	grafana/grafana
+```
