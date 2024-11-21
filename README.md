@@ -55,3 +55,22 @@ docker run -d \
 	-p 80:80 \
 	nginx:latest
 ```
+
+
+### Redis
+
+1. Server
+```
+docker run -d \
+	-p 6379:6379 \
+	redis
+```
+
+2. Client
+```
+docker run -it \
+	--network=host 
+	redis \
+	redis-cli -h 127.0.0.1 # ADD HERE THE HOSTNAME
+```
+
