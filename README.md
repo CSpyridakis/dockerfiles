@@ -74,3 +74,12 @@ docker run -it \
 	redis-cli -h 127.0.0.1 # ADD HERE THE HOSTNAME
 ```
 
+===============================================================================
+NOT TESTED
+
+### Network-Multitool
+```
+docker run -it --rm \
+    praqma/network-multitool \
+    bash
+```
