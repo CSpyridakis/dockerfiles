@@ -25,7 +25,6 @@ docker run -d \
 1. With appdata
 ```
 docker run -d \
-    --name=firefox \
     -p 5800:5800 \
     -v /docker/appdata/firefox:/config:rw \
     jlesage/firefox
@@ -34,7 +33,6 @@ docker run -d \
 2. Without appdata
 ```
 docker run -d \
-    --name=firefox \
     -p 5800:5800 \
     jlesage/firefox
 ```
@@ -42,7 +40,6 @@ docker run -d \
 ### Grafana
 ```
 docker run -d \
-	--name=grafana \
 	-p 4000:3000 \
 	grafana/grafana
 ```
@@ -51,7 +48,6 @@ docker run -d \
 ### Nginx
 ```
 docker run -d \
-	--name nginx-base \
 	-p 80:80 \
 	nginx:latest
 ```
