@@ -11,6 +11,22 @@ docker run -d \
   	portainer/portainer
 ```
 ### Open WebUI (https://github.com/open-webui/open-webui)
+> [!WARNING]
+> In order to work:
+> 1. sudo vim /etc/systemd/system/ollama.service
+> ```
+> Environment="OLLAMA_HOST=0.0.0.0:11434"
+> ```
+> 2. Then restart ollama
+> ```
+> sudo systemctl daemon-reload
+> sudo systemctl restart ollama
+> ```
+> 3. Make sure that your firewall accepts requests there
+> ```
+> sudo ufw allow 11434
+> ```
+
 ```
 docker run -d \
 	-p 3000:8080 \
