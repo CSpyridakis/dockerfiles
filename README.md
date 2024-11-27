@@ -10,7 +10,16 @@ docker run -d \
   	-v /var/run/docker.sock:/var/run/docker.sock \
   	portainer/portainer
 ```
-
+### Open WebUI (https://github.com/open-webui/open-webui)
+```
+docker run -d \
+	-p 3000:8080 \
+	--add-host=host.docker.internal:host-gateway \
+	-v open-webui:/app/backend/data \
+	--name open-webui \
+	--restart always \
+	ghcr.io/open-webui/open-webui:main
+```
 
 ### IT-TOOLS
 ```
