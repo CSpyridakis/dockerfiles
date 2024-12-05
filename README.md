@@ -70,6 +70,18 @@ docker run -it \
 	redis-cli -h 127.0.0.1 # ADD HERE THE HOSTNAME
 ```
 
+### GDU
+```
+docker run --rm \
+    --init \
+    --interactive \
+    --tty \
+    --privileged \
+    --volume /:/mnt/root \
+    ghcr.io/dundee/gdu \
+    /mnt/root
+```
+
 ### Open WebUI (https://github.com/open-webui/open-webui)
 > [!WARNING]
 > In order to work:
