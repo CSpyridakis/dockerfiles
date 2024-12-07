@@ -5,6 +5,7 @@
 ### Portainer 
 ```
 docker run -d \
+	--name portainer \
 	-p 9000:9000 \
 	--restart always \
   	-v /var/run/docker.sock:/var/run/docker.sock \
@@ -13,10 +14,9 @@ docker run -d \
 
 ### IT-TOOLS
 ```
-docker run -d \
-	-p 8080:80 \
+docker run -d --rm \
 	--name it-tools \
-	-it \
+	-p 8080:80 \
 	corentinth/it-tools
 ```
 
@@ -24,22 +24,25 @@ docker run -d \
 
 1. With appdata
 ```
-docker run -d \
+docker run -d --rm \
+	--name firefox \
     -p 5800:5800 \
     -v /docker/appdata/firefox:/config:rw \
     jlesage/firefox
 ```
 
-2. Without appdata
+1. Without appdata
 ```
-docker run -d \
+docker run -d --rm \
+	--name firefox \
     -p 5800:5800 \
     jlesage/firefox
 ```
 
 ### Grafana
 ```
-docker run -d \
+docker run -d --rm \
+	--name grafana \
 	-p 4000:3000 \
 	grafana/grafana
 ```
@@ -47,7 +50,8 @@ docker run -d \
 
 ### Nginx
 ```
-docker run -d \
+docker run -d --rm \
+	--name nginx \
 	-p 80:80 \
 	nginx:latest
 ```
@@ -57,14 +61,15 @@ docker run -d \
 
 1. Server
 ```
-docker run -d \
+docker run -d --rm \
+	--name redis \
 	-p 6379:6379 \
 	redis
 ```
 
 2. Client
 ```
-docker run -it \
+docker run -it --rm \
 	--network=host 
 	redis \
 	redis-cli -h 127.0.0.1 # ADD HERE THE HOSTNAME
