@@ -70,7 +70,7 @@ docker run -d --rm \
 2. Client
 ```
 docker run -it --rm \
-	--network=host 
+	--network=host \
 	redis \
 	redis-cli -h 127.0.0.1 # ADD HERE THE HOSTNAME
 ```
