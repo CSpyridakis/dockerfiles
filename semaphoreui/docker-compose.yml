@@ -1,0 +1,13 @@
+# see: https://github.com/semaphoreui/semaphore
+
+version: '3.9'
+services:
+    semaphore:
+        image: 'semaphoreui/semaphore:latest'
+        environment:
+            - SEMAPHORE_ADMIN_EMAIL=admin@localhost
+            - SEMAPHORE_ADMIN_NAME=Admin
+            - SEMAPHORE_ADMIN_PASSWORD=changeme
+            - SEMAPHORE_ADMIN=admin
+            - SEMAPHORE_DB_DIALECT=bolt
+        container_name: semaphore
