@@ -1,3 +1,5 @@
+# see: https://github.com/khezen/compose-postgres/blob/master/docker-compose.yml
+
 services:
   postgres:
     container_name: postgres_container
