@@ -1,0 +1,11 @@
+services:
+    linkding:
+        image: 'sissbruecker/linkding:latest'
+        volumes:
+            - './linkding-files/:/etc/linkding/data'
+        # ports:
+        #     - '9090:9090'
+        container_name: linkding
+
+        # Then run: 
+        # python manage.py createsuperuser --username=joe --email=joe@example.com
