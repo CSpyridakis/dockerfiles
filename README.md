@@ -1,155 +1,25 @@
 # DOCKERFILES
 
-## Good 
+🗒️ General Notes
 
-### Portainer 
-```
-docker run -d \
-	--name portainer \
-	-p 9000:9000 \
-	--restart always \
-  	-v /var/run/docker.sock:/var/run/docker.sock \
-  	portainer/portainer
-```
+This repository contains a personal collection of `Dockerfiles`/`Docker Compose`/`Docker Commands`, collected over the years, regarding different technologies and tools.
 
-### IT-TOOLS
-```
-docker run -d --rm \
-	--name it-tools \
-	-p 8080:80 \
-	corentinth/it-tools
-```
+---
 
-### Firefox
+💡 Purpose
 
-1. With appdata
-```
-docker run -d --rm \
-	--name firefox \
-    -p 5800:5800 \
-    -v /docker/appdata/firefox:/config:rw \
-    jlesage/firefox
-```
+The idea is to collect each solution once and minimize the time spent, or automate the process, of evaluating the same concept in the future.
 
-1. Without appdata
-```
-docker run -d --rm \
-	--name firefox \
-    -p 5800:5800 \
-    jlesage/firefox
-```
+---
 
-### Grafana
-```
-docker run -d --rm \
-	--name grafana \
-	-p 4000:3000 \
-	grafana/grafana
-```
+💬 What should I expect?
 
+`Dockerfiles`/`Docker Compose`/`Docker Commands` about different technologies. For example, regarding different tools, such as [it-tools](./it-tools/), is available. There are also `Dockerfiles`/`Docker Compose`/`Docker Commands` related to [redis](./redis/), [portainer](./portainer/), and even [wakapi](./wakapi/).
 
-### Nginx
-```
-docker run -d --rm \
-	--name nginx \
-	-p 80:80 \
-	nginx:latest
-```
+Navigate to the different directories or search for keywords to find solutions or guidance on a given task.
 
+---
 
-### Redis
+❓ After that?
+If you have any further questions or need help with another topic, feel free to create a pull request.
 
-1. Server
-```
-docker run -d --rm \
-	--name redis \
-	-p 6379:6379 \
-	redis
-```
-
-2. Client
-```
-docker run -it --rm \
-	--network=host \
-	redis \
-	redis-cli -h 127.0.0.1 # ADD HERE THE HOSTNAME
-```
-
-### GDU
-```
-docker run --rm \
-    --init \
-    --interactive \
-    --tty \
-    --privileged \
-    --volume /:/mnt/root \
-    ghcr.io/dundee/gdu \
-    /mnt/root
-```
-
-### Open WebUI (https://github.com/open-webui/open-webui)
-> [!WARNING]
-> In order to work:
-> 1. sudo vim /etc/systemd/system/ollama.service
-> ```
-> Environment="OLLAMA_HOST=0.0.0.0:11434"
-> ```
-> 2. Then restart ollama
-> ```
-> sudo systemctl daemon-reload
-> sudo systemctl restart ollama
-> ```
-> 3. Make sure that your firewall accepts requests there
-> ```
-> sudo ufw allow 11434
-> ```
-
-1. CPU
-```
-docker run -d \
-	-p 3000:8080 \
-	--add-host=host.docker.internal:host-gateway \
-	-v open-webui:/app/backend/data \
-	--restart always \
-	ghcr.io/open-webui/open-webui:main
-```
-2. GPU
-> [!WARNING]
-> In order to work:
-> 1. Configure the repository:
-> ```
-> curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey |sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
-> && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list \
-> && sudo apt-get update
-> ```
-> 
-> 2. Install the NVIDIA Container Toolkit packages:
-> ```
-> sudo apt-get install -y nvidia-container-toolkit
-> ```
-> 3. Configure the container runtime by using the nvidia-ctk command:
-> ```
-> sudo nvidia-ctk runtime configure --runtime=docker
-> ```
-> 4. Restart the Docker daemon:
-> ```
-> sudo systemctl restart docker
-> ```
-```
-docker run -d \
-	-p 3001:8080 \
-	--gpus all \
-	--add-host=host.docker.internal:host-gateway \
-	-v open-webui:/app/backend/data \
- 	--restart always \
-	ghcr.io/open-webui/open-webui:cuda
-```
-===============================================================================
-NOT TESTED
-
-### Network-Multitool
-```
-docker run -it --rm \
-    praqma/network-multitool \
-    bash
-```
