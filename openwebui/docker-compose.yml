@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+    open-webui:
+        image: 'ghcr.io/open-webui/open-webui:main'
+        restart: always
+        container_name: open-webui
+        environment:
+            - 'OLLAMA_BASE_URL=http://127.0.0.1:11434'
