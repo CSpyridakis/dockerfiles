@@ -1,5 +1,6 @@
 # Grafana
 
+Default login: admin:admin
 ```
 docker run -d --rm \
 	--name grafana \
