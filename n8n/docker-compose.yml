@@ -1,0 +1,18 @@
+# Personally I use Nginx Proxy Manager to utilize TLS
+# See: https://docs.n8n.io/hosting/installation/server-setups/docker-compose/#5-create-docker-compose-file
+# for the original docker compose that utilizes traefik
+
+services:  
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    # ports:
+    #   - "127.0.0.1:5678:5678"
+    container_name: n8n
+    volumes:
+      - n8n_data:/home/node/.n8n
+    tty: true
+    stdin_open: true
+
+volumes:
+  n8n_data:
