@@ -1,16 +1,20 @@
 #!/bin/bash
 
+# Default 80
+WP_SERVER_PORT=$(($RANDOM + ($RANDOM % 2) * 32768))
+# Default 8088
+WP_PHPMYADMIN_PORT=$(($RANDOM + ($RANDOM % 2) * 32768))
+
 # ----------------------------------------------------------
 
 docker_compose(){
     projectName=$1
-    echo "version: '3.1'
-
+    echo "
 services:
   #MySql
   ${projectName}-db:    #TODO: if you ever change project's name you have to modify it
     image: mysql:5.7
-    container_name: \${PROJECT_NAME}-db 
+    container_name: ${projectName}-db 
     # restart: always
     environment:
       MYSQL_DATABASE: \${WP_DB_NAME}
@@ -19,32 +23,32 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - ./mysql/data:/var/lib/mysql
-    ports:
-      - \${WP_DB_PORT}:3306
     networks:
-      - \${PROJECT_NAME}-network
+      - ${projectName}-network
 
   #Phpmyadmin     
   ${projectName}-phpmyadmin:    #TODO: if you ever change project's name you have to modify it
     image: phpmyadmin/phpmyadmin:4.8
-    container_name: \${PROJECT_NAME}-phpmyadmin 
+    container_name: ${projectName}-phpmyadmin 
     depends_on: 
-      - \${PROJECT_NAME}-db 
+      - ${projectName}-db 
     # restart: always
     links:
-       - \${PROJECT_NAME}-db:db
+      - ${projectName}-db:db
     ports:
       - \${WP_PHPMYADMIN_PORT}:80  
+    networks:
+      - ${projectName}-network
 
   #Wordpress
   ${projectName}-wordpress: #TODO: if you ever change project's name you have to modify it
     image: wordpress
-    container_name: \${PROJECT_NAME}-server 
+    container_name: ${projectName}-server 
     depends_on: 
-      - \${PROJECT_NAME}-db 
+      - ${projectName}-db 
     # restart: always
     environment:
-      WORDPRESS_DB_HOST: \${PROJECT_NAME}-db:\${WP_DB_PORT}
+      WORDPRESS_DB_HOST: ${projectName}-db:3306
       WORDPRESS_DB_USER: \${WP_DB_USERNAME}
       WORDPRESS_DB_PASSWORD: \${WP_DB_PASSWORD}
       WORDPRESS_DB_NAME: \${WP_DB_NAME}
@@ -52,16 +56,16 @@ services:
       # Actual wordpress files
       - ./wordpressdata:/var/www/html  
 
-       # For Simply static exported data 
-       # (Settings > Delivery Method: Local Directory = \"/data/website\")
+      # For Simply static exported data 
+      # (Settings > Delivery Method: Local Directory = \"/data/website\")
       # - './data/website:/data/website' 
     ports:
       - \${WP_SERVER_PORT}:80
     networks:
-      - \${PROJECT_NAME}-network
+      - ${projectName}-network
 
 networks:
-  ${projectName}-network:   #TODO: if you ever change project's name you have to modify it
+  ${projectName}-network:
 "   > docker-compose.yml
 
 }
@@ -74,9 +78,10 @@ dotenv(){
 PROJECT_NAME=${projectName} #TODO: if you ever need to change project's name you have to modify it
 
 # Containers ports | Use WP_SERVER_PORT=80 if you want to use simply static plugin
-WP_DB_PORT=3306
-WP_SERVER_PORT=80   
-WP_PHPMYADMIN_PORT=8088
+# Default 80
+WP_SERVER_PORT=${WP_SERVER_PORT}
+# Default 8088
+WP_PHPMYADMIN_PORT=${WP_PHPMYADMIN_PORT}
 
 # DB credentials
 WP_DB_NAME=wordpress_db
@@ -182,6 +187,25 @@ sed -i \"s/http:\/\/localhost\/wp-content\/uploads\/2020\/12\//images\//g\" ./st
     chmod +x export-site.sh
 }
 
+start_script(){
+  echo "#!/bin/bash
+  docker compose up -d
+  echo "Operation is complete!"
+  echo "- Phpmyadmin runs on: http://localhost:${WP_PHPMYADMIN_PORT}"
+  echo "- Wordpress instance runs on: http://localhost:${WP_SERVER_PORT}"
+  " > RUN
+
+  chmod +x RUN
+}
+
+stop_script(){
+  echo "#!/bin/bash
+  docker compose down
+  " > KILL_ME
+
+  chmod +x KILL_ME
+}
+
 # ----------------------------------------------------------
 
 main(){
@@ -196,6 +220,8 @@ main(){
         gitignore
         docker_compose ${projectName}
         dotenv ${projectName}
+        start_script
+        stop_script
     else
         echo "Give project's name"
     fi
